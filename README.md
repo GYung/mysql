@@ -1,4 +1,4 @@
-# MYSQL
+#MYSQL
 ###　第六章　查询优化
 
 ####　慢查询分析
@@ -56,14 +56,21 @@
     2.  查询优化器：动静优化
     3.  关联表优化：根据成本重构关联顺序
     4.  排序优化：成本高。小的内存排，大的分块内存排，存到磁盘中最后合并。
-5.  优化器的局限性
-    1.  关联子查询:exists先查外表，in查内表，根据表大小选择。连接通常好于子查询
-    2.  union限制:限制条件无法推到内层，需要额外写。
-    3.  不支持松散索引：组合索引中只使用第二个，索引无效。（可以给前面列加常数值）
-    4.  最大值最小值优化：
-        ````
-            select MIN(id) from user where username='yy';
+****
+####优化器的局限性
+
+1.  关联子查询:exists先查外表，in查内表，根据表大小选择。连接通常好于子查询
+2.  union限制:限制条件无法推到内层，需要额外写。
+3.  不支持松散索引：组合索引中只使用第二个，索引无效。（可以给前面列加常数值）
+4.  最大值最小值优化：
+    ````
+       select MIN(id) from user where username='yy';
             改写
-            select id from user use index(primary) where username='yy' limit 1;
-         ````
+       select id from user use index(primary) where username='yy' limit 1;
+    ````
+5.  同一个表上查询更新：解决办法，通过多表关update
+***
+####查询优化提示
+
+
          
